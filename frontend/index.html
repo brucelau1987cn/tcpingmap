@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全国三网 Ping 延迟地图</title>
+    <title>全国三网 TCPing 延迟地图</title>
     <!-- 引入 ECharts 和中国地图 -->
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
@@ -146,9 +146,9 @@
         let currentServer = null; // 当前选中的服务器
         // 定义所有数据源
         const servers = [
-            { name: "ClawCloud HK", ip: "https://hk5000.aunet.dpdns.org" },
-            { name: "ClawCloud JP", ip: "https://jp5000.aunet.dpdns.org" },
-            { name: "Example", ip: "http://example.com:5000" }
+            { name: "Example A", ip: "http://a.example.com:5000" },
+            { name: "Example B", ip: "http://b.example.com:5000" },
+            { name: "Example C", ip: "http://c.example.com:5000" }
         ];
         // 渲染服务器列表
         function renderServerList() {
