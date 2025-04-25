@@ -563,16 +563,16 @@
   },
     "香港": {
         "香港": {
-            "STC": {
-                "ip": "suntechspeedtest.com",
+            "HKT": {
+                "ip": "hkspeedtest.netvigator.com.prod.hosts.ooklaserver.net",
                 "port": 8080
             },
-            "SmarTone": {
-                "ip": "kami.smartone.com",
+            "HGC": {
+                "ip": "ookla-speedtest-central.hgconair.hgc.com.hk",
                 "port": 8080
             },
-            "HKIX": {
-                "ip": "speedtest1c.hkix.net",
+            "HKBN": {
+                "ip": "speedtest21.hkbn.net.prod.hosts.ooklaserver.net",
                 "port": 8080
             }
         }
