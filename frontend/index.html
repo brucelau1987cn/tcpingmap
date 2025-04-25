@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全国三网 TCPing 延迟地图</title>
+    <title>全国三网 Ping 延迟地图</title>
     <!-- 引入 ECharts 和中国地图 -->
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
@@ -66,12 +66,10 @@
         }
         /* 新增：服务器选择悬浮框 */
         #server-selector {
-            position: fixed;
-            bottom: 60px; /* 向上移动，避免与按钮重叠 */
-            right: 10px;
+            position: absolute;
+            top: 10px; /* 移动到顶部 */
+            left: 10px; /* 移动到左侧 */
             z-index: 1000;
-            width: 250px;
-            max-height: 90vh;
             background-color: #fff;
             border: 1px solid #ccc;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -79,7 +77,8 @@
             font-family: Arial, sans-serif;
             font-size: 14px;
             color: #333;
-            display: block; /* 默认展开 */
+            display: flex; /* 使用flex布局 */
+            align-items: center;
             transition: max-height 0.5s ease-in-out; /* 添加过渡动画 */
         }
         #server-selector h3 {
@@ -89,35 +88,22 @@
             text-align: center; /* 标题居中 */
         }
         #server-list {
-            max-height: 60vh;
-            overflow-y: auto;
-            text-align: center; /* 内容居中 */
+            display: flex; /* 使用flex布局 */
+            gap: 10px; /* 间距 */
+            overflow-x: auto; /* 水平滚动 */
+            white-space: nowrap; /* 防止换行 */
         }
         .server-item {
-            margin-bottom: 5px;
             cursor: pointer;
             font-size: 14px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         .server-item.selected {
             font-weight: bold;
             color: #007bff;
-        }
-        /* 悬浮框展开/隐藏按钮 */
-        #toggle-server-selector {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            z-index: 1001;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        #toggle-server-selector:hover {
-            background-color: #0056b3;
+            background-color: #e0e8f0;
         }
     </style>
 </head>
@@ -136,8 +122,6 @@
             <!-- 动态生成服务器列表 -->
         </div>
     </div>
-    <!-- 展开/隐藏按钮 -->
-    <button id="toggle-server-selector">隐藏服务器列表</button>
     <script>
         var chartDom = document.getElementById('map');
         var myChart = echarts.init(chartDom);
@@ -147,7 +131,8 @@
         // 定义所有数据源
         const servers = [
             { name: "ClawCloud HK", ip: "https://hk5000.aunet.dpdns.org" },
-            { name: "ClawCloud JP", ip: "https://jp5000.aunet.dpdns.org" }
+            { name: "ClawCloud JP", ip: "https://jp5000.aunet.dpdns.org" },
+            { name: "Example", ip: "http://example.com:5000" }
         ];
         // 渲染服务器列表
         function renderServerList() {
@@ -313,18 +298,6 @@
                 } else {
                     content.style.maxHeight = '70vh'; // 展开
                     button.innerText = '收起详细信息 ▲';
-                }
-            });
-            // 服务器悬浮框展开/隐藏按钮逻辑
-            const toggleButton = document.getElementById('toggle-server-selector');
-            const serverSelector = document.getElementById('server-selector');
-            toggleButton.addEventListener('click', function () {
-                if (serverSelector.style.maxHeight && serverSelector.style.maxHeight !== '0px') {
-                    serverSelector.style.maxHeight = '0px'; // 收起
-                    toggleButton.innerText = '显示服务器列表';
-                } else {
-                    serverSelector.style.maxHeight = '90vh'; // 展开
-                    toggleButton.innerText = '隐藏服务器列表';
                 }
             });
         };
