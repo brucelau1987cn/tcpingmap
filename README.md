@@ -17,5 +17,7 @@
    
 PS: 后端默认传输端口为 **5000**
 
+4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
+
 ## 演示网站
 访问演示网站：https://tcpingmap.pages.dev/
