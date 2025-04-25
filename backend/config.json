@@ -524,5 +524,21 @@
                 "port": 80
             }
         }
+    },
+    "澳门": {
+        "澳门": {
+            "CTM": {
+                "ip": "speedtest2.macau.ctm.net",
+                "port": 8080
+            },
+            "MTel": {
+                "ip": "speedtest2.mtel.mo.prod.hosts.ooklaserver.net",
+                "port": 8080
+            },
+            "电信": {
+                "ip": "speedtest1.chinatelecom.com.mo.prod.hosts.ooklaserver.net",
+                "port": 8080
+            }
+        }
     }
 }
