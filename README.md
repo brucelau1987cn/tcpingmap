@@ -21,3 +21,77 @@ PS: 后端默认传输端口为 **5000**
 
 ## 演示网站
 访问演示网站：https://tcpingmap.pages.dev/
+
+## 配置文件拼接示例
+
+结构为省份/直辖市-城市-运营商
+
+   ```bash
+{
+    "上海": {
+        "上海": {
+            "电信": {
+                "ip": "sh-ct-v4.ip.zstaticcdn.com",
+                "port": 80
+            },
+            "联通": {
+                "ip": "sh-cu-v4.ip.zstaticcdn.com",
+                "port": 80
+            },
+            "移动": {
+                "ip": "sh-cm-v4.ip.zstaticcdn.com",
+                "port": 80
+            }
+        }
+    }
+}
+```
+
+单省份多城市拼接示例
+
+   ```bash
+{
+"广东": {
+    "广州": {
+        "电信": {
+            "ip": "www.gd.gov.cn",
+            "port": 80
+        },
+        "联通": {
+            "ip": "gd-cu-v4.ip.zstaticcdn.com",
+            "port": 80
+        },
+        "移动": {
+            "ip": "gd-cm-v4.ip.zstaticcdn.com",
+            "port": 80
+        }
+    },
+    "深圳": {
+        "电信": {
+            "ip": "www.sz.gov.cn",
+            "port": 80
+        }
+    },
+    "东莞": {
+        "电信": {
+            "ip": "cn-gddg-ct-01-04.bilivideo.com",
+            "port": 443
+        },
+        "联通": {
+            "ip": "cn-gddg-cu-01-02.bilivideo.com",
+            "port": 443
+        },
+        "移动": {
+            "ip": "cn-gddg-cm-01-04.bilivideo.com",
+            "port": 443
+        }
+    },
+    "清远": {
+        "电信": {
+            "ip": "www.gdqy.gov.cn",
+            "port": 80
+        }
+    }
+  }
+}
+```
