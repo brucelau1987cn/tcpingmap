@@ -559,5 +559,21 @@
                 "ip": "ty1.chtm.hinet.net.prod.hosts.ooklaserver.net",
                 "port": 8080
             }
+    },
+    "香港": {
+        "香港": {
+            "STC": {
+                "ip": "suntechspeedtest.com",
+                "port": 8080
+            },
+            "SmarTone": {
+                "ip": "kami.smartone.com",
+                "port": 8080
+            },
+            "HKIX": {
+                "ip": "speedtest1c.hkix.net",
+                "port": 8080
+            }
+        }
     }
 }
