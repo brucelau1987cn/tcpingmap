@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 获取当前脚本所�
 RESULT_FILE = os.path.join(BASE_DIR, "result.json")
 
 # 远程配置文件 URL
-REMOTE_CONFIG_URL = "https://tcpingmap.pages.dev/config.json"
+REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap/refs/heads/main/backend/config.json"
 
 # 加载远程配置文件
 def load_remote_config():
