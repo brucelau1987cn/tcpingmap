@@ -559,7 +559,8 @@
                 "ip": "ty1.chtm.hinet.net.prod.hosts.ooklaserver.net",
                 "port": 8080
             }
-    },
+    }
+  },
     "香港": {
         "香港": {
             "STC": {
@@ -575,5 +576,5 @@
                 "port": 8080
             }
         }
-    }
+  }
 }
