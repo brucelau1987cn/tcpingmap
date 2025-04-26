@@ -14,10 +14,17 @@
 3. 启动！
    ```bash
    python3 app.py
-   
-PS: 后端默认传输端口为 **5000**
 
 4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
+
+后端默认传输端口为 **5000**
+
+```bash
+      const servers = [
+        { name: "Your Potato Server A", ip: "http://potato-a.server.au:5000" },
+        { name: "Your Potato Server B", ip: "http://potato-a.server.au:5000" }
+      ];
+```
 
 ## 演示网站
 访问演示网站：`https://tcpingmap.pages.dev/`
@@ -34,7 +41,7 @@ REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap
 
 结构为省份/直辖市-城市-运营商
 
-   ```bash
+```bash
 {
     "上海": {
         "上海": {
@@ -57,7 +64,7 @@ REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap
 
 单省份多城市拼接示例
 
-   ```bash
+```bash
 {
 "广东": {
     "广州": {
@@ -109,7 +116,7 @@ REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap
 `http://your-server.au:5000/get_results`
 
 文件内容示例
-   ```bash
+```bash
 {
   "台湾-台东 (是方电讯)": {
     "average_delay": 25.19
