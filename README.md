@@ -11,9 +11,11 @@
    
    ```bash
    pip install -r requirements.txt
+   ```
 3. 启动！
    ```bash
    python3 app.py
+   ```
 
 4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
 
