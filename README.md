@@ -27,7 +27,7 @@
 ```
 
 ## 演示网站
-访问演示网站：`https://tcpingmap.pages.dev/`
+访问演示网站：https://tcpingmap.pages.dev/
 
 ## 配置文件
 
