@@ -28,8 +28,11 @@
       ];
 ```
 
-## 演示网站
-访问演示网站：https://tcpingmap.pages.dev/
+## 实战演示
+演示网站：https://tcpingmap.pages.dev/
+
+镜像网站：
+https://tcpingmap.pp.ua/
 
 ## 配置文件
 
