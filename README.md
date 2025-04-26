@@ -31,8 +31,7 @@
 ## 实战演示
 演示网站：https://tcpingmap.pages.dev/
 
-镜像网站：
-https://tcpingmap.pp.ua/
+镜像网站：https://tcpingmap.pp.ua/
 
 ## 配置文件
 
@@ -48,7 +47,7 @@ REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap
 
 ```bash
 {
-    "上海": {
+"上海": {
         "上海": {
             "电信": {
                 "ip": "sh-ct-v4.ip.zstaticcdn.com",
