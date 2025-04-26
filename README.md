@@ -20,9 +20,17 @@ PS: 后端默认传输端口为 **5000**
 4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
 
 ## 演示网站
-访问演示网站：https://tcpingmap.pages.dev/
+访问演示网站：`https://tcpingmap.pages.dev/`
 
-## 配置文件拼接示例
+## 配置文件
+
+定时远程拉取获取最新配置文件
+
+   ```bash
+# 远程配置文件 URL
+REMOTE_CONFIG_URL = "https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap/refs/heads/main/backend/config.json"
+```
+**拼接示例**
 
 结构为省份/直辖市-城市-运营商
 
