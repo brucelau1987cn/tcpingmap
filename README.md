@@ -22,7 +22,7 @@
 ```bash
       const servers = [
         { name: "Your Potato Server A", ip: "http://potato-a.server.au:5000" },
-        { name: "Your Potato Server B", ip: "http://potato-a.server.au:5000" }
+        { name: "Your Potato Server B", ip: "http://potato-b.server.au:5000" }
       ];
 ```
 
