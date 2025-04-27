@@ -1,0 +1,50 @@
+{
+    "北京": {
+        "北京": {
+            "电信": {
+                "ip": "bj-ct-v4.ip.zstaticcdn.com",
+                "port": 80
+            },
+            "联通": {
+                "ip": "bj-cu-v4.ip.zstaticcdn.com",
+                "port": 80
+            }
+        }
+    },
+    "上海": {
+        "上海": {
+            "电信": {
+                "ip": "sh-ct-v4.ip.zstaticcdn.com",
+                "port": 80
+            },
+            "联通": {
+                "ip": "sh-cu-v4.ip.zstaticcdn.com",
+                "port": 80
+            }
+        }
+    },
+    "广东": {
+        "广州": {
+            "电信": {
+                "ip": "gz-ct-v4.ip.zstaticcdn.com",
+                "port": 80
+            },
+            "联通": {
+                "ip": "gz-cu-v4.ip.zstaticcdn.com",
+                "port": 80
+            }
+        },
+        "深圳": {
+            "电信": {
+                "ip": "183.36.23.111",
+                "port": 80
+            }
+        },
+        "潮州": {
+            "联通": {
+                "ip": "112.90.211.100",
+                "port": 80
+            }
+        }
+    }
+}

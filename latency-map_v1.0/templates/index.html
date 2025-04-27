@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全国三网 Ping 延迟地图</title>
+    <!-- 引入 ECharts 和中国地图 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #e0e8f0; /* 蓝灰色背景 */
+            overflow: hidden; /* 防止滚动条出现 */
+        }
+        #map {
+            width: 100vw; /* 占满整个视口宽度 */
+            height: 100vh; /* 占满整个视口高度 */
+            border: none; /* 移除边框 */
+            box-shadow: none; /* 移除阴影 */
+        }
+        #info-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            width: 300px;
+            max-height: 90vh;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+        #info-box h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        #info-content {
+            display: none; /* 默认隐藏内容 */
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        #info-box p {
+            margin: 5px 0;
+        }
+        #toggle-button {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 14px;
+        }
+        #toggle-button:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <!-- 悬浮框 -->
+    <div id="info-box">
+        <h3 id="info-title">全国 详细信息</h3>
+        <div id="info-content"></div>
+        <div id="toggle-button">展开详细信息 ▼</div>
+    </div>
+
+    <script>
+        var chartDom = document.getElementById('map');
+        var myChart = echarts.init(chartDom);
+
+        let detailedData = {}; // 存储所有省份的详细数据
+        let lastClickedProvince = null; // 记录上一次点击的省份
+
+        // 获取并绘制 Ping 延迟数据
+        function fetchData() {
+            fetch('/get_results')
+                .then(response => response.json())
+                .then(data => {
+                    const provinceData = {};
+                    detailedData = {};
+
+                    for (const key in data) {
+                        const [province, cityOperator] = key.split("-"); // 分离省份和城市+运营商
+                        const delay = data[key];
+
+                        if (!provinceData[province]) {
+                            provinceData[province] = { totalDelay: 0, count: 0 };
+                        }
+
+                        // 累加延迟值并计数
+                        provinceData[province].totalDelay += delay || 0;
+                        provinceData[province].count += 1;
+
+                        // 存储详细数据
+                        if (!detailedData[province]) {
+                            detailedData[province] = [];
+                        }
+                        detailedData[province].push({
+                            name: cityOperator,
+                            value: delay
+                        });
+                    }
+
+                    // 计算每个省份的平均延迟
+                    const mapData = Object.keys(provinceData).map(province => ({
+                        name: province,
+                        value: provinceData[province].totalDelay / provinceData[province].count || null
+                    }));
+
+                    // 绘制地图
+                    var option = {
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: function (params) {
+                                const province = params.name;
+                                if (detailedData[province]) {
+                                    let tooltipContent = `<strong>${province}</strong><br>`;
+                                    detailedData[province].forEach(item => {
+                                        tooltipContent += `${item.name}: ${item.value} ms<br>`;
+                                    });
+                                    return tooltipContent;
+                                }
+                                return `${province}: 数据不可用`;
+                            }
+                        },
+                        visualMap: {
+                            min: 0,
+                            max: 100,
+                            left: 'left',
+                            top: 'bottom',
+                            text: ['高延迟', '低延迟'],
+                            calculable: true,
+                            inRange: {
+                                color: ['#31c27c', '#ffeb3b', '#f44336'] // 绿色 -> 黄色 -> 红色
+                            }
+                        },
+                        series: [{
+                            name: 'Ping 延迟',
+                            type: 'map',
+                            mapType: 'china',
+                            roam: true, // 允许缩放和平移
+                            label: {
+                                show: true,
+                                color: '#333',
+                                fontSize: 10
+                            },
+                            itemStyle: {
+                                areaColor: 'transparent', // 默认省份区域透明
+                                borderColor: '#ccc'       // 区域边界颜色
+                            },
+                            data: mapData
+                        }]
+                    };
+                    myChart.setOption(option);
+
+                    // 添加点击事件
+                    myChart.on('click', function (params) {
+                        const province = params.name;
+
+                        if (province === lastClickedProvince) {
+                            // 反选省份时，恢复全国数据
+                            document.getElementById('info-title').innerText = '全国 详细信息';
+                            document.getElementById('info-content').innerHTML = generateDefaultContent();
+                            lastClickedProvince = null; // 清空记录
+                        } else if (detailedData[province]) {
+                            // 更新悬浮框内容
+                            document.getElementById('info-title').innerText = `${province} 详细信息`;
+
+                            // 构建详细内容
+                            let content = '';
+                            detailedData[province].forEach(item => {
+                                content += `<p><strong>${item.name}</strong>: ${item.value} ms</p>`;
+                            });
+                            document.getElementById('info-content').innerHTML = content;
+
+                            // 更新记录
+                            lastClickedProvince = province;
+                        } else {
+                            // 如果没有数据，保持默认显示
+                            document.getElementById('info-title').innerText = '全国 详细信息';
+                            document.getElementById('info-content').innerHTML = generateDefaultContent();
+                            lastClickedProvince = null; // 清空记录
+                        }
+
+                        // 自动展开详细信息
+                        document.getElementById('info-content').style.display = 'block';
+                        document.getElementById('toggle-button').innerText = '收起详细信息 ▲';
+                    });
+
+                    // 页面加载时默认显示全国数据
+                    document.getElementById('info-title').innerText = '全国 详细信息';
+                    document.getElementById('info-content').innerHTML = generateDefaultContent();
+                });
+        }
+
+        // 生成全国数据的默认内容
+        function generateDefaultContent() {
+            let content = '';
+            for (const province in detailedData) {
+                content += `<p><strong>${province}</strong>:</p>`;
+                detailedData[province].forEach(item => {
+                    content += `<p>&nbsp;&nbsp;${item.name}: ${item.value} ms</p>`;
+                });
+            }
+            return content || '<p>暂无数据</p>';
+        }
+
+        // 初始化加载数据
+        window.onload = function () {
+            fetchData();
+            setInterval(fetchData, 30000); // 每 30 秒刷新一次数据
+
+            // 展开/收起按钮逻辑
+            document.getElementById('toggle-button').addEventListener('click', function () {
+                const content = document.getElementById('info-content');
+                const button = document.getElementById('toggle-button');
+
+                if (content.style.display === 'none') {
+                    content.style.display = 'block';
+                    button.innerText = '收起详细信息 ▲';
+                } else {
+                    content.style.display = 'none';
+                    button.innerText = '展开详细信息 ▼';
+                }
+            });
+        };
+
+        // 自适应窗口大小
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+    </script>
+</body>
+</html>
