@@ -6,7 +6,7 @@
                 "port": 443
             },
             "联通": {
-                "ip": "sh-cu-v4.ip.zstaticcdn.com",
+                "ip": "59.81.65.42",
                 "port": 80
             },
             "移动": {
