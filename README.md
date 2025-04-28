@@ -6,15 +6,15 @@
 
 ## 快速开始
 
-1. 将 `backend` 文件夹复制到服务器。
-2. 确保已安装 **Python 3**，并安装 `requirements.txt` 中的依赖：
+1. 确保已安装 **Python 3** 和 **pip**
+2. 安装依赖:
    
    ```bash
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap/refs/heads/main/backend/requirements.txt
    ```
 3. 启动！
    ```bash
-   python3 app.py
+   python3 -c "import requests,subprocess; r=requests.get('https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap/refs/heads/main/backend/app.py'); open('app.py','wb').write(r.content); subprocess.run(['python3','app.py'])"
    ```
 
 4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
