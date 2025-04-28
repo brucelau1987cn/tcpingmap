@@ -2,8 +2,8 @@
     "上海": {
         "上海": {
             "电信": {
-                "ip": "sh-ct-v4.ip.zstaticcdn.com",
-                "port": 80
+                "ip": "www.shio.gov.cn",
+                "port": 443
             },
             "联通": {
                 "ip": "sh-cu-v4.ip.zstaticcdn.com",
