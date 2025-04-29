@@ -230,8 +230,8 @@
                 "port": 80
             },
             "联通": {
-                "ip": "sn-cu-v4.ip.zstaticcdn.com",
-                "port": 80
+                "ip": "cn-sxxa-cu-02-02.bilivideo.com",
+                "port": 443
             },
             "移动": {
                 "ip": "sn-cm-v4.ip.zstaticcdn.com",
