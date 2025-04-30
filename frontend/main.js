@@ -116,11 +116,17 @@ async function fetchData() {
     for (const key in data) {
       const [province, cityOperator] = key.split("-");
       const { average_delay } = data[key];
+
       if (!provinceData[province]) {
         provinceData[province] = { totalDelay: 0, totalCount: 0 };
       }
-      provinceData[province].totalDelay += average_delay || 0;
-      provinceData[province].totalCount += 1;
+
+      // 仅当 average_delay 是有效数字时才累加
+      if (typeof average_delay === 'number' && !isNaN(average_delay)) {
+        provinceData[province].totalDelay += average_delay;
+        provinceData[province].totalCount += 1;
+      }
+
       if (!detailedData[province]) {
         detailedData[province] = [];
       }
@@ -130,9 +136,12 @@ async function fetchData() {
       });
     }
 
+    // 生成 mapData（无有效数据时返回 null）
     const mapData = Object.keys(provinceData).map(province => ({
       name: province,
-      value: (provinceData[province].totalDelay / provinceData[province].totalCount) || null
+      value: provinceData[province].totalCount > 0 
+        ? (provinceData[province].totalDelay / provinceData[province].totalCount).toFixed(2) 
+        : null
     }));
 
     updateChart(mapData);
@@ -145,13 +154,28 @@ async function fetchData() {
     // 显示超时提示
     loadingContent.innerHTML = `
       <span style="color: #dc2626;">加载超时，请稍后重试</span>
+      <button id="retry-button" style="
+        margin-top: 10px;
+        padding: 0.5rem 1rem;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+      ">重试</button>
     `;
 
+    // 绑定重试事件
+    document.getElementById('retry-button').onclick = () => {
+      fetchData();
+    };
+
   } finally {
-    // 0.5秒后隐藏加载动画
+    // 0.3秒后隐藏加载动画
     setTimeout(() => {
       loading.style.display = 'none';
-    }, 500);
+    }, 300);
   }
 }
 
@@ -161,7 +185,7 @@ function updateChart(mapData) {
       trigger: 'item',
       formatter: function (params) {
         const province = params.name;
-        return `<strong>${province}</strong><br>平均延迟: ${params.value ? `${params.value.toFixed(2)} ms` : '暂无数据'}`;
+        return `<strong>${province}</strong><br>平均延迟: ${params.value ? `${params.value} ms` : '暂无数据'}`;
       }
     },
     visualMap: {
@@ -189,12 +213,13 @@ function updateChart(mapData) {
           color: '#333'
         },
         itemStyle: {
-          areaColor: '#b8e0f6'
+          areaColor: '#a1c4fd'
         }
       },
       select: {
         itemStyle: {
-          areaColor: '#a1c4fd' // 自定义选中颜色
+          areaColor: '#a1c4fd',
+          borderColor: '#2563eb'
         }
       },
       label: {
