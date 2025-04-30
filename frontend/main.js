@@ -148,10 +148,10 @@ async function fetchData() {
     `;
 
   } finally {
-    // 2秒后隐藏加载动画
+    // 0.5秒后隐藏加载动画
     setTimeout(() => {
       loading.style.display = 'none';
-    }, 2000);
+    }, 500);
   }
 }
 
