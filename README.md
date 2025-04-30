@@ -17,7 +17,7 @@
    python3 -c "import requests,subprocess; r=requests.get('https://raw.githubusercontent.com/TogawaSakiko363/tcpingmap/refs/heads/main/backend/app.py'); open('app.py','wb').write(r.content); subprocess.run(['python3','app.py'])"
    ```
 
-4. 将 `frontend` 文件夹中 `index.html` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
+4. 将 `frontend` 文件夹中 `main.js` 的服务器数据源改成你的服务器传输地址，并部署到类似Cloudflare Pages的容器中
 
 后端默认传输端口为 **5000**
 
