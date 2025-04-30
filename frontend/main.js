@@ -82,13 +82,37 @@ function getLatencyClass(latency) {
 
 async function fetchData() {
   if (!currentServer) return;
+
   const loading = document.getElementById('loading');
+  const loadingContent = document.querySelector('.loading-content');
+  const timeoutDuration = 10000; // 10秒超时
+
   loading.style.display = 'flex';
+  loadingContent.innerHTML = `
+    <div class="loading-spinner"></div>
+    <span>加载中...</span>
+  `;
+
   try {
-    const response = await fetch(`${currentServer}/get_results`);
+    // 创建超时 Promise
+    const timeout = new Promise((_, reject) => {
+      setTimeout(() => {
+        reject(new Error('加载超时'));
+      }, timeoutDuration);
+    });
+
+    // 竞争 fetch 和 timeout
+    const response = await Promise.race([
+      fetch(`${currentServer}/get_results`),
+      timeout
+    ]);
+
+    if (!response.ok) throw new Error(`HTTP 错误: ${response.status}`);
+
     const data = await response.json();
     const provinceData = {};
     detailedData = {};
+
     for (const key in data) {
       const [province, cityOperator] = key.split("-");
       const { average_delay } = data[key];
@@ -105,17 +129,29 @@ async function fetchData() {
         average_delay
       });
     }
+
     const mapData = Object.keys(provinceData).map(province => ({
       name: province,
-      value: provinceData[province].totalDelay / provinceData[province].totalCount || null
+      value: (provinceData[province].totalDelay / provinceData[province].totalCount) || null
     }));
+
     updateChart(mapData);
     updateInfoPanel();
     updateLastUpdateTime();
+
   } catch (error) {
     console.error('Error fetching data:', error);
+
+    // 显示超时提示
+    loadingContent.innerHTML = `
+      <span style="color: #dc2626;">加载超时，请稍后重试</span>
+    `;
+
   } finally {
-    loading.style.display = 'none';
+    // 2秒后隐藏加载动画
+    setTimeout(() => {
+      loading.style.display = 'none';
+    }, 2000);
   }
 }
 
@@ -232,6 +268,6 @@ window.onload = function() {
     currentServer = servers[0].ip;
     renderServerList();
     fetchData();
-    setInterval(fetchData, 90000);
+    setInterval(fetchData, 90000); // 每 90 秒自动刷新
   }
 };
