@@ -192,6 +192,11 @@ function updateChart(mapData) {
           areaColor: '#b8e0f6'
         }
       },
+      select: {
+        itemStyle: {
+          areaColor: '#a1c4fd' // 自定义选中颜色
+        }
+      },
       label: {
         show: true,
         color: '#333',
