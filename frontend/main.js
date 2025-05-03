@@ -154,28 +154,13 @@ async function fetchData() {
     // 显示超时提示
     loadingContent.innerHTML = `
       <span style="color: #dc2626;">加载超时，请稍后重试</span>
-      <button id="retry-button" style="
-        margin-top: 10px;
-        padding: 0.5rem 1rem;
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        font-size: 0.875rem;
-      ">重试</button>
     `;
 
-    // 绑定重试事件
-    document.getElementById('retry-button').onclick = () => {
-      fetchData();
-    };
-
   } finally {
-    // 0.3秒后隐藏加载动画
+    // 0.1秒后隐藏加载动画
     setTimeout(() => {
       loading.style.display = 'none';
-    }, 300);
+    }, 100);
   }
 }
 
