@@ -6,8 +6,6 @@ let currentServer = null;
 let isInfoCollapsed = false;
 let isServerCollapsed = false;
 const servers = [
-  { name: "ClawCloud HK CN-Opt", ip: "https://hk.cnopt.clawcloud.tcpingmap.aunet.dpdns.org" },
-  { name: "ClawCloud JP INTL", ip: "https://jp.intl.clawcloud.tcpingmap.aunet.dpdns.org" },
   { name: "Sharon HK Premium", ip: "https://hkg.pre.sharon.tcpingmap.aunet.dpdns.org" },
   { name: "Sharon SG Premium", ip: "https://sin.pre.sharon.tcpingmap.aunet.dpdns.org" },
   { name: "Sharon JP Premium", ip: "https://jpn.pre.sharon.tcpingmap.aunet.dpdns.org" },
