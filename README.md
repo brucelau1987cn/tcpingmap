@@ -1,8 +1,8 @@
 # tcpingmap
 
-🎉 **船新的屎山代码已经上线！** 🎉
+ **tcpingmap已经合并到AUmonitor** 
 
-你想要的功能他都没有（逃
+ 项目地址：https://github.com/TogawaSakiko363/aumonitor
 
 ## 快速开始
 
